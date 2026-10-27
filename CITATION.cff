@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use these captures, please cite the paper listed under preferred-citation."
+type: dataset
+title: "Keysight N6705C power captures of PQC test loops on a Lichee RV Nano W"
+version: 1.0.0
+date-released: 2026-10-27
+repository-code: "https://github.com/quannguyen247/keysight-n6705c"
+authors:
+  - family-names: Nguyen
+    given-names: Dong-Quan
+    affiliation: "University of Information Technology, VNU-HCM"
+  - family-names: Le
+    given-names: Quan
+    affiliation: "University of Information Technology, VNU-HCM"
+  - family-names: Huynh
+    given-names: Nhat-Phat
+    affiliation: "University of Information Technology, VNU-HCM"
+keywords:
+  - post-quantum cryptography
+  - ML-KEM
+  - ML-DSA
+  - SLH-DSA
+  - RISC-V
+  - energy measurement
+preferred-citation:
+  type: article
+  status: in-preparation
+  title: "An Adaptive Post-Quantum Cryptography Architecture for IoT: Deployment and Evaluation for Quantum-Safe Networks"
+  authors:
+    - family-names: Nguyen
+      given-names: Dong-Quan
+    - family-names: Le
+      given-names: Quan
+    - family-names: Huynh
+      given-names: Nhat-Phat
