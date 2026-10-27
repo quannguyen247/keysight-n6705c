@@ -1,0 +1,138 @@
+{
+  "pqm4_commit": "b1a9fd1",
+  "clock_hz": 1000000000.0,
+  "rows": [
+    {
+      "parameter": "ML-KEM-512",
+      "completion_captured": false,
+      "rv64_mcycles": 1.9999947986200002,
+      "m4_mcycles": 2.185051,
+      "rv64_over_m4": 0.9153080631161471,
+      "predicted_stress_op_ms": 0.8133912562123534,
+      "stress_user_ms": 1.83,
+      "stress_over_predicted": 2.2498397739380653,
+      "batch_cpu_over_elapsed": 0.1152705437786985
+    },
+    {
+      "parameter": "ML-KEM-768",
+      "completion_captured": true,
+      "rv64_mcycles": 3.3695537828925004,
+      "m4_mcycles": 3.514931,
+      "rv64_over_m4": 0.9586400936156358,
+      "predicted_stress_op_ms": 1.3305771116970047,
+      "stress_user_ms": 2.29,
+      "stress_over_predicted": 1.7210577123781703,
+      "batch_cpu_over_elapsed": 0.12003236166613548
+    },
+    {
+      "parameter": "ML-KEM-1024",
+      "completion_captured": true,
+      "rv64_mcycles": 5.023924019576,
+      "m4_mcycles": 5.264741,
+      "rv64_over_m4": 0.9542585322955108,
+      "predicted_stress_op_ms": 1.9279142777769926,
+      "stress_user_ms": 2.87,
+      "stress_over_predicted": 1.48865539981855,
+      "batch_cpu_over_elapsed": 0.159885380869818
+    },
+    {
+      "parameter": "ML-DSA-44",
+      "completion_captured": false,
+      "rv64_mcycles": 9.999973993100001,
+      "m4_mcycles": 11.863456,
+      "rv64_over_m4": 0.8429225002478199,
+      "predicted_stress_op_ms": 6.68096580545171,
+      "stress_user_ms": 7.22,
+      "stress_over_predicted": 1.0806820765507337,
+      "batch_cpu_over_elapsed": 0.6203741727230185
+    },
+    {
+      "parameter": "ML-DSA-65",
+      "completion_captured": true,
+      "rv64_mcycles": 16.58093500532,
+      "m4_mcycles": 18.941894,
+      "rv64_over_m4": 0.8753578182477423,
+      "predicted_stress_op_ms": 10.818596295761669,
+      "stress_user_ms": 11.5,
+      "stress_over_predicted": 1.0629844839025262,
+      "batch_cpu_over_elapsed": 0.7118801696563191
+    },
+    {
+      "parameter": "ML-DSA-87",
+      "completion_captured": true,
+      "rv64_mcycles": 23.042866262383335,
+      "m4_mcycles": 26.531579,
+      "rv64_over_m4": 0.8685071575417104,
+      "predicted_stress_op_ms": 13.530918551514125,
+      "stress_user_ms": 14.0,
+      "stress_over_predicted": 1.034667376549494,
+      "batch_cpu_over_elapsed": 0.849592765186609
+    },
+    {
+      "parameter": "SLH-DSA-SHA2-128s",
+      "completion_captured": true,
+      "rv64_mcycles": 12741.836281533333,
+      "m4_mcycles": 8672.761484,
+      "rv64_over_m4": 1.4691786814430665,
+      "predicted_stress_op_ms": 11250.321212335824,
+      "stress_user_ms": 11416.68,
+      "stress_over_predicted": 1.0147870255901463,
+      "batch_cpu_over_elapsed": 0.8406537214557097
+    },
+    {
+      "parameter": "SLH-DSA-SHA2-192s",
+      "completion_captured": true,
+      "rv64_mcycles": 26923.334584486667,
+      "m4_mcycles": 16975.239796,
+      "rv64_over_m4": 1.5860355970247213,
+      "predicted_stress_op_ms": 24507.56477256937,
+      "stress_user_ms": 26123.06,
+      "stress_over_predicted": 1.0659182273890717,
+      "batch_cpu_over_elapsed": 0.8473072897657203
+    },
+    {
+      "parameter": "SLH-DSA-SHA2-256s",
+      "completion_captured": true,
+      "rv64_mcycles": 25136.16793720667,
+      "m4_mcycles": 15346.880407,
+      "rv64_over_m4": 1.637868235797393,
+      "predicted_stress_op_ms": 23464.43192263058,
+      "stress_user_ms": 24835.22,
+      "stress_over_predicted": 1.0584198280141335,
+      "batch_cpu_over_elapsed": 0.8398437618730257
+    },
+    {
+      "parameter": "SLH-DSA-SHAKE-128s",
+      "completion_captured": true,
+      "rv64_mcycles": 27866.561426106666,
+      "m4_mcycles": 27809.465148,
+      "rv64_over_m4": 1.00205312392032,
+      "predicted_stress_op_ms": 24604.108193435753,
+      "stress_user_ms": 24937.65,
+      "stress_over_predicted": 1.0135563461167527,
+      "batch_cpu_over_elapsed": 0.8407567650997927
+    },
+    {
+      "parameter": "SLH-DSA-SHAKE-192s",
+      "completion_captured": true,
+      "rv64_mcycles": 47359.91615292,
+      "m4_mcycles": 47942.904702,
+      "rv64_over_m4": 0.9878399410151784,
+      "predicted_stress_op_ms": 42590.05451422078,
+      "stress_user_ms": 43346.48,
+      "stress_over_predicted": 1.017760613232525,
+      "batch_cpu_over_elapsed": 0.83743173251447
+    },
+    {
+      "parameter": "SLH-DSA-SHAKE-256s",
+      "completion_captured": true,
+      "rv64_mcycles": 40376.72795706667,
+      "m4_mcycles": 41430.508488,
+      "rv64_over_m4": 0.9745651074681223,
+      "predicted_stress_op_ms": 37204.70285370584,
+      "stress_user_ms": 37764.38,
+      "stress_over_predicted": 1.0150431828066169,
+      "batch_cpu_over_elapsed": 0.8391465252486586
+    }
+  ]
+}
