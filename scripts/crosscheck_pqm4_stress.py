@@ -74,8 +74,8 @@ def main() -> None:
     rows = [compare(c) for c in captures]
     for r in rows:
         bound = "" if r["completion_captured"] else " (run outlasts capture: bound)"
-        print(f"{r['parameter']}: RV64/M4 {r['rv64_over_m4']:.2f}, stress/predicted {r['stress_over_predicted']:.2f}, "
-              f"batch CPU/elapsed {r['batch_cpu_over_elapsed']:.3f}{bound}")
+        print(f"{r['parameter']}: RV64/M4 {r['rv64_over_m4']:.2f}, stress CPU minus prediction {r['excess_ms']:.2f} ms "
+              f"({100 * r['excess_rel']:.1f}%), batch CPU/elapsed {r['batch_cpu_over_elapsed']:.3f}{bound}")
     if args.output:
         args.output.write_text(json.dumps({"pqm4_commit": "b1a9fd1", "clock_hz": CLOCK_HZ, "rows": rows}, indent=2) + "\n",
                                encoding="utf-8")
