@@ -10,7 +10,7 @@ The repository holds the raw logger files, the operator's run notes, the script 
 data/       12 raw .dlog files, one per parameter set, and the operator's run notes
 scripts/    analyse_energy_logs.py, crosscheck_pqm4_stress.py (Python standard library only)
 analysis/   summary.json, energy_results.csv, crosscheck_pqm4_stress.json, decoder_crosscheck.json
-models/     gateway_check.py, a bounded check of the device-to-gateway frame protocol
+models/     gateway_check.py and uplink_check.py, checks of the gateway protocol model
 ```
 
 ## Measurement setup
@@ -109,6 +109,17 @@ python3 models/gateway_check.py
 | Gateway loses its counter table | 232,119 | none | none | 4 actions |
 
 The model has two counters per device and two payload values, so it is a bounded check of the local layer, not a proof of the full protocol.
+
+`models/uplink_check.py` covers the cloud-facing exchange: D sends an ephemeral ML-KEM public key signed with its long-term key, C encapsulates to it and signs the ciphertext together with that key. The adversary can replace either message with anything it can build, and the long-term keys of D and C leak after the session.
+
+| Variant | Key secrecy | Forward secrecy | Agreement |
+|---|---|---|---|
+| Design | holds | holds | holds |
+| Device key not signed | violated | holds | holds |
+| Cloud response not signed | violated | holds | violated |
+| Static cloud KEM key instead of an ephemeral one | holds | violated | holds |
+
+This is one session with a fixed set of adversary messages, so it shows why each element is needed rather than proving the protocol secure in general.
 
 ## Noted completion times against the trace
 
