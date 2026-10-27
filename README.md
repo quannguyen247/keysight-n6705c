@@ -166,3 +166,7 @@ Nine of the ten detected edges fall within about 1 s of the note. ML-KEM-1024 fi
 ## Citation
 
 Citation details are in `CITATION.cff`. Please cite the paper if you use these captures.
+
+## License
+
+Data and derived results are CC BY 4.0; scripts and models are MIT. See `LICENSE`.
