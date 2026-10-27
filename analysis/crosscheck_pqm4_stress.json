@@ -9,8 +9,9 @@
       "m4_mcycles": 2.185051,
       "rv64_over_m4": 0.9153080631161471,
       "predicted_stress_op_ms": 0.8133912562123534,
-      "stress_user_ms": 1.83,
-      "stress_over_predicted": 2.2498397739380653,
+      "stress_cpu_ms": 2.5700000000000003,
+      "excess_ms": 1.756608743787647,
+      "excess_rel": 2.159611048645261,
       "batch_cpu_over_elapsed": 0.1152705437786985
     },
     {
@@ -20,8 +21,9 @@
       "m4_mcycles": 3.514931,
       "rv64_over_m4": 0.9586400936156358,
       "predicted_stress_op_ms": 1.3305771116970047,
-      "stress_user_ms": 2.29,
-      "stress_over_predicted": 1.7210577123781703,
+      "stress_cpu_ms": 3.06,
+      "excess_ms": 1.7294228883029954,
+      "excess_rel": 1.2997539737455028,
       "batch_cpu_over_elapsed": 0.12003236166613548
     },
     {
@@ -31,8 +33,9 @@
       "m4_mcycles": 5.264741,
       "rv64_over_m4": 0.9542585322955108,
       "predicted_stress_op_ms": 1.9279142777769926,
-      "stress_user_ms": 2.87,
-      "stress_over_predicted": 1.48865539981855,
+      "stress_cpu_ms": 3.85,
+      "excess_ms": 1.9220857222230074,
+      "excess_rel": 0.9969767558541525,
       "batch_cpu_over_elapsed": 0.159885380869818
     },
     {
@@ -42,8 +45,9 @@
       "m4_mcycles": 11.863456,
       "rv64_over_m4": 0.8429225002478199,
       "predicted_stress_op_ms": 6.68096580545171,
-      "stress_user_ms": 7.22,
-      "stress_over_predicted": 1.0806820765507337,
+      "stress_cpu_ms": 8.12,
+      "excess_ms": 1.439034194548289,
+      "excess_rel": 0.21539313872464794,
       "batch_cpu_over_elapsed": 0.6203741727230185
     },
     {
@@ -53,8 +57,9 @@
       "m4_mcycles": 18.941894,
       "rv64_over_m4": 0.8753578182477423,
       "predicted_stress_op_ms": 10.818596295761669,
-      "stress_user_ms": 11.5,
-      "stress_over_predicted": 1.0629844839025262,
+      "stress_cpu_ms": 12.629999999999999,
+      "excess_ms": 1.8114037042383302,
+      "excess_rel": 0.16743426362512226,
       "batch_cpu_over_elapsed": 0.7118801696563191
     },
     {
@@ -64,8 +69,9 @@
       "m4_mcycles": 26.531579,
       "rv64_over_m4": 0.8685071575417104,
       "predicted_stress_op_ms": 13.530918551514125,
-      "stress_user_ms": 14.0,
-      "stress_over_predicted": 1.034667376549494,
+      "stress_cpu_ms": 15.36,
+      "excess_ms": 1.8290814484858746,
+      "excess_rel": 0.1351779217000164,
       "batch_cpu_over_elapsed": 0.849592765186609
     },
     {
@@ -75,8 +81,9 @@
       "m4_mcycles": 8672.761484,
       "rv64_over_m4": 1.4691786814430665,
       "predicted_stress_op_ms": 11250.321212335824,
-      "stress_user_ms": 11416.68,
-      "stress_over_predicted": 1.0147870255901463,
+      "stress_cpu_ms": 11426.6,
+      "excess_ms": 176.27878766417598,
+      "excess_rel": 0.01566877819194068,
       "batch_cpu_over_elapsed": 0.8406537214557097
     },
     {
@@ -86,8 +93,9 @@
       "m4_mcycles": 16975.239796,
       "rv64_over_m4": 1.5860355970247213,
       "predicted_stress_op_ms": 24507.56477256937,
-      "stress_user_ms": 26123.06,
-      "stress_over_predicted": 1.0659182273890717,
+      "stress_cpu_ms": 26154.09,
+      "excess_ms": 1646.5252274306295,
+      "excess_rel": 0.06718436706014708,
       "batch_cpu_over_elapsed": 0.8473072897657203
     },
     {
@@ -97,8 +105,9 @@
       "m4_mcycles": 15346.880407,
       "rv64_over_m4": 1.637868235797393,
       "predicted_stress_op_ms": 23464.43192263058,
-      "stress_user_ms": 24835.22,
-      "stress_over_predicted": 1.0584198280141335,
+      "stress_cpu_ms": 24867.93,
+      "excess_ms": 1403.4980773694188,
+      "excess_rel": 0.05981385281336382,
       "batch_cpu_over_elapsed": 0.8398437618730257
     },
     {
@@ -108,8 +117,9 @@
       "m4_mcycles": 27809.465148,
       "rv64_over_m4": 1.00205312392032,
       "predicted_stress_op_ms": 24604.108193435753,
-      "stress_user_ms": 24937.65,
-      "stress_over_predicted": 1.0135563461167527,
+      "stress_cpu_ms": 24959.140000000003,
+      "excess_ms": 355.03180656424956,
+      "excess_rel": 0.014429777489719076,
       "batch_cpu_over_elapsed": 0.8407567650997927
     },
     {
@@ -119,8 +129,9 @@
       "m4_mcycles": 47942.904702,
       "rv64_over_m4": 0.9878399410151784,
       "predicted_stress_op_ms": 42590.05451422078,
-      "stress_user_ms": 43346.48,
-      "stress_over_predicted": 1.017760613232525,
+      "stress_cpu_ms": 43385.18,
+      "excess_ms": 795.1254857792228,
+      "excess_rel": 0.01866927607509239,
       "batch_cpu_over_elapsed": 0.83743173251447
     },
     {
@@ -130,8 +141,9 @@
       "m4_mcycles": 41430.508488,
       "rv64_over_m4": 0.9745651074681223,
       "predicted_stress_op_ms": 37204.70285370584,
-      "stress_user_ms": 37764.38,
-      "stress_over_predicted": 1.0150431828066169,
+      "stress_cpu_ms": 37798.479999999996,
+      "excess_ms": 593.7771462941528,
+      "excess_rel": 0.015959733602199933,
       "batch_cpu_over_elapsed": 0.8391465252486586
     }
   ]

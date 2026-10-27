@@ -56,13 +56,15 @@ def compare(capture: dict) -> dict:
     stress_op = last if name.startswith("ML-KEM") else middle  # decapsulation or signing
     predicted_ms = 1000 * iteration_s * stress_op / (keygen + middle + last)
     elapsed, user, system, sessions = STRESS[name]
+    # getrusage splits user and system time in scheduler ticks, so only their sum is compared.
+    cpu = user + system
     return {
         "parameter": name, "completion_captured": capture["completion_captured"],
         "rv64_mcycles": iteration_s * CLOCK_HZ / 1e6, "m4_mcycles": (keygen + middle + last) / 1e6,
         "rv64_over_m4": iteration_s * CLOCK_HZ / (keygen + middle + last),
-        "predicted_stress_op_ms": predicted_ms, "stress_user_ms": user,
-        "stress_over_predicted": user / predicted_ms,
-        "batch_cpu_over_elapsed": sessions * (user + system) / elapsed,
+        "predicted_stress_op_ms": predicted_ms, "stress_cpu_ms": cpu,
+        "excess_ms": cpu - predicted_ms, "excess_rel": cpu / predicted_ms - 1,
+        "batch_cpu_over_elapsed": sessions * cpu / elapsed,
     }
 
 
