@@ -92,6 +92,23 @@ Combining the last two gives a standard uncertainty of 3.1 to 4.8% per configura
 
 The same script predicts the client CPU time of the paper's stress test, where each client only signs (ML-DSA, SLH-DSA) or decapsulates (ML-KEM). Scaling the iteration time by the pqm4 share of that operation, the recorded user CPU time is 1.01 to 1.08 times the prediction for all nine signature sets. The ML-KEM clients sit about 1 ms above the prediction, which looks like fixed per-process overhead. The stress means are copied into the script from the paper's table.
 
+## Bounded check of the gateway frame protocol
+
+`models/gateway_check.py` is not about the power data. It backs the security argument in the paper's architecture section. Frames between devices and the gateway are modelled as symbolic AEAD terms (key, device, counter, payload) with the counter as nonce. Two honest devices send, a third device is compromised, and the adversary can replay, reorder, and forge with any key it holds. The script explores every reachable state (a few seconds, standard library only):
+
+```sh
+python3 models/gateway_check.py
+```
+
+| Variant | Reachable states | Nonce reuse | Forged origin | Replay accepted |
+|---|---:|---|---|---|
+| Design: per-device keys, persistent counters, gateway keeps last counter | 3,969 | none | none | none |
+| Shared group key | 35,721 | 2 actions | 1 action | none |
+| Device restarts its counter without re-keying | 39,681 | 3 actions | none | none |
+| Gateway loses its counter table | 232,119 | none | none | 4 actions |
+
+The model has two counters per device and two payload values, so it is a bounded check of the local layer, not a proof of the full protocol.
+
 ## Noted completion times against the trace
 
 | Configuration | Time (instrument clock) | Noted (s) | Edge in trace (s) | Tail used (s) | Tail power (W) |
