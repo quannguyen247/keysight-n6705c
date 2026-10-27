@@ -8,8 +8,8 @@ The repository holds the raw logger files, the operator's run notes, the script 
 
 ```
 data/       12 raw .dlog files, one per parameter set, and the operator's run notes
-scripts/    analyse_energy_logs.py (Python standard library only)
-analysis/   summary.json, energy_results.csv, decoder_crosscheck.json
+scripts/    analyse_energy_logs.py, crosscheck_pqm4_stress.py (Python standard library only)
+analysis/   summary.json, energy_results.csv, crosscheck_pqm4_stress.json, decoder_crosscheck.json
 ```
 
 ## Measurement setup
@@ -39,10 +39,12 @@ Python 3.8 or newer, no extra packages:
 
 ```sh
 python3 scripts/analyse_energy_logs.py --tails
+python3 scripts/analyse_energy_logs.py --uncertainty
 python3 scripts/analyse_energy_logs.py --output analysis/summary.json --csv analysis/energy_results.csv
+python3 scripts/crosscheck_pqm4_stress.py --output analysis/crosscheck_pqm4_stress.json
 ```
 
-The first command prints the LaTeX rows of the paper's energy table and, for each run, the noted completion time next to the edge found in the trace. `--check-table path/to/table.tex` exits with an error if any of the twelve rounded rows is missing from a LaTeX table.
+The first command prints the LaTeX rows of the paper's energy table and, for each run, the noted completion time next to the edge found in the trace. The second prints the uncertainty checks described below; it takes a minute or two. `--check-table path/to/table.tex` exits with an error if any of the twelve rounded rows is missing from a LaTeX table. The cross-check script reads `analysis/summary.json`, so run the third command first.
 
 ## Method
 
@@ -73,6 +75,22 @@ The first command prints the LaTeX rows of the paper's energy table and, for eac
 \* Idle power borrowed from the capture taken about five minutes earlier.
 
 The test loops add 0.097 to 0.136 W on top of an idle level of 0.605 to 0.640 W, so most of the window energy is the board's own idle draw. The idle level rose by about 0.03 W between the 09:48 and 09:55 captures; keep that in mind when comparing mean power across rows.
+
+## Uncertainty of the per-iteration energy
+
+There is one capture per configuration, so the uncertainty comes from three checks within the data:
+
+- Analysis parameters. Rerunning with edge thresholds at 30, 50, and 70% of the step, hold times of 0.25, 0.5, and 1 s, and settle times of 0.1, 0.25, and 0.5 s changes the per-iteration energy by at most 2.1%.
+- Stability within a run. Splitting each window into ten equal segments gives a standard error of the mean power increment of at most 2.6%.
+- Idle level. Tail power varies by 0.0041 W (standard deviation) between captures of the same session, which is 3.0 to 4.3% of the increment.
+
+Combining the last two gives a standard uncertainty of 3.1 to 4.8% per configuration, which is why the table uses two significant figures. None of this covers between-run variation or instrument calibration.
+
+## Cross-checks with pqm4 and the stress test
+
+`scripts/crosscheck_pqm4_stress.py` converts each iteration time to cycles at the fixed 1.0 GHz clock and compares it with the mean cycle counts of the pqm4 `clean` implementations on a Cortex-M4 ([commit b1a9fd1](https://github.com/mupq/pqm4/blob/b1a9fd1ffcbb9dfd683083f2062725528ed907b1/benchmarks.md)). ML-KEM, ML-DSA, and the SHAKE-based SLH-DSA sets come out at 0.84 to 1.00 times the Cortex-M4 cycles, and the SHA2-based sets at 1.47 to 1.64 times.
+
+The same script predicts the client CPU time of the paper's stress test, where each client only signs (ML-DSA, SLH-DSA) or decapsulates (ML-KEM). Scaling the iteration time by the pqm4 share of that operation, the recorded user CPU time is 1.01 to 1.08 times the prediction for all nine signature sets. The ML-KEM clients sit about 1 ms above the prediction, which looks like fixed per-process overhead. The stress means are copied into the script from the paper's table.
 
 ## Noted completion times against the trace
 
