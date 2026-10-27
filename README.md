@@ -10,6 +10,7 @@ The repository holds the raw logger files, the operator's run notes, the script 
 data/       12 raw .dlog files, one per parameter set, and the operator's run notes
 scripts/    analyse_energy_logs.py, crosscheck_pqm4_stress.py (Python standard library only)
 analysis/   summary.json, energy_results.csv, crosscheck_pqm4_stress.json, decoder_crosscheck.json
+models/     gateway_check.py, a bounded check of the device-to-gateway frame protocol
 ```
 
 ## Measurement setup
