@@ -536,5 +536,103 @@
       "incremental_energy_J": 15.87489241101639,
       "incremental_energy_per_iteration_mJ": 5291.63080367213
     }
+  ],
+  "uncertainty": [
+    {
+      "parameter": "ML-KEM-512",
+      "sensitivity_max_rel": 1.1693774712068069e-15,
+      "segment_se_rel": 0.012645498943435435,
+      "idle_spread_W": 0.004121377424381174,
+      "idle_rel": 0.03858630819317948,
+      "combined_standard_rel": 0.04060556394765939
+    },
+    {
+      "parameter": "ML-KEM-768",
+      "sensitivity_max_rel": 0.019811502705012037,
+      "segment_se_rel": 0.007350025085407401,
+      "idle_spread_W": 0.004121377424381174,
+      "idle_rel": 0.037157464995618734,
+      "combined_standard_rel": 0.037877434887499305
+    },
+    {
+      "parameter": "ML-KEM-1024",
+      "sensitivity_max_rel": 0.0210939678399543,
+      "segment_se_rel": 0.00530394025842311,
+      "idle_spread_W": 0.004121377424381174,
+      "idle_rel": 0.036599382440256435,
+      "combined_standard_rel": 0.036981705981107366
+    },
+    {
+      "parameter": "ML-DSA-44",
+      "sensitivity_max_rel": 0.0,
+      "segment_se_rel": 0.00962251382921307,
+      "idle_spread_W": 0.004121377424381174,
+      "idle_rel": 0.033922057549949224,
+      "combined_standard_rel": 0.03526044186926
+    },
+    {
+      "parameter": "ML-DSA-65",
+      "sensitivity_max_rel": 0.005464459108397568,
+      "segment_se_rel": 0.009415015923004647,
+      "idle_spread_W": 0.004121377424381174,
+      "idle_rel": 0.03339315661327206,
+      "combined_standard_rel": 0.034695034708571
+    },
+    {
+      "parameter": "ML-DSA-87",
+      "sensitivity_max_rel": 0.014719826933807714,
+      "segment_se_rel": 0.007437188535151915,
+      "idle_spread_W": 0.004121377424381174,
+      "idle_rel": 0.033137155546008955,
+      "combined_standard_rel": 0.03396149070620704
+    },
+    {
+      "parameter": "SLH-DSA-SHA2-128s",
+      "sensitivity_max_rel": 0.005027682846606429,
+      "segment_se_rel": 0.011744372523507253,
+      "idle_spread_W": 0.004121377424381174,
+      "idle_rel": 0.042678601399088426,
+      "combined_standard_rel": 0.04426503477185107
+    },
+    {
+      "parameter": "SLH-DSA-SHA2-192s",
+      "sensitivity_max_rel": 0.0037057457793983777,
+      "segment_se_rel": 0.025849165929279206,
+      "idle_spread_W": 0.004121377424381174,
+      "idle_rel": 0.04038774502868998,
+      "combined_standard_rel": 0.047951531026046296
+    },
+    {
+      "parameter": "SLH-DSA-SHA2-256s",
+      "sensitivity_max_rel": 2.0702955313810188e-05,
+      "segment_se_rel": 0.009531070292452542,
+      "idle_spread_W": 0.004121377424381174,
+      "idle_rel": 0.04057151091908208,
+      "combined_standard_rel": 0.041675997878597555
+    },
+    {
+      "parameter": "SLH-DSA-SHAKE-128s",
+      "sensitivity_max_rel": 0.0008780374393359505,
+      "segment_se_rel": 0.00959868546156827,
+      "idle_spread_W": 0.004121377424381174,
+      "idle_rel": 0.03020053212151029,
+      "combined_standard_rel": 0.03168922376790723
+    },
+    {
+      "parameter": "SLH-DSA-SHAKE-192s",
+      "sensitivity_max_rel": 0.0009698258276451534,
+      "segment_se_rel": 0.003049290189097064,
+      "idle_spread_W": 0.004121377424381174,
+      "idle_rel": 0.030510352405094636,
+      "combined_standard_rel": 0.03066235109283676
+    },
+    {
+      "parameter": "SLH-DSA-SHAKE-256s",
+      "sensitivity_max_rel": 0.0008396658237827957,
+      "segment_se_rel": 0.001813065662296188,
+      "idle_spread_W": 0.004121377424381174,
+      "idle_rel": 0.031447344164138614,
+      "combined_standard_rel": 0.03149956606167108
+    }
   ]
 }

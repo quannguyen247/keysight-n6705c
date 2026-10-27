@@ -43,6 +43,11 @@ EDGE_HOLD_S = 0.5      # the drop must persist for this long
 TAIL_SETTLE_S = 0.25   # skipped after the edge before averaging the tail
 MIN_TAIL_S = 0.5       # shorter tails are not used as idle estimates
 DAGGER, ASTERISK, GEQ = r"$^{\dagger}$", r"$^{\ast}$", r"$\geq$"
+SENS_STEP_FRACTIONS = (0.3, 0.5, 0.7)  # edge threshold as a fraction of the active-to-tail step
+SENS_HOLD_S = (0.25, 0.5, 1.0)
+SENS_SETTLE_S = (0.1, 0.25, 0.5)
+SEGMENTS = 10           # equal segments of [1 s, end - 1 s] for the within-run spread
+BASELINE_STEP = "09:50"  # idle rose by about 0.03 W between the 09:48 and 09:55 captures
 NOTE_LINE = re.compile(
     r"^\+\s+(?:sphincsplus\s+)?(?P<name>\S+)\s+ntest\s*=\s*(?P<count>\d+)"
     r"\s+(?:durations:\s*)?(?P<run>[\d.]+)/(?P<capture>[\d.]+)s$"
@@ -95,7 +100,8 @@ def block_means(power: list[float], dt: float, width: float,
     return means, step * dt
 
 
-def find_completion(power: list[float], dt: float, noted_run: float) -> float | None:
+def find_completion(power: list[float], dt: float, noted_run: float,
+                    step_fraction: float = 0.5, hold_s: float = EDGE_HOLD_S) -> float | None:
     """Return the first sustained drop from the active level to the post-run level, if captured."""
     coverage = len(power) * dt
     run = min(noted_run, coverage)
@@ -103,9 +109,9 @@ def find_completion(power: list[float], dt: float, noted_run: float) -> float | 
     tail = statistics.median(block_means(power, dt, LEVEL_BLOCK_S, coverage - TAIL_LEVEL_S)[0])
     if active - tail <= MIN_STEP_W:
         return None
-    threshold = (active + tail) / 2
+    threshold = tail + step_fraction * (active - tail)
     fine, width = block_means(power, dt, EDGE_BLOCK_S)
-    hold = round(EDGE_HOLD_S / width)
+    hold = round(hold_s / width)
     for k in range(int(max(0.0, run - SEARCH_BEFORE_NOTE_S) / width), len(fine) - hold + 1):
         if fine[k] < threshold and math.fsum(fine[k:k + hold]) / hold < threshold:
             return k * width
@@ -191,6 +197,48 @@ def two_significant(value: float) -> str:
     return f"{round(value, decimals):,.{max(decimals, 0)}f}"
 
 
+def uncertainty(rows: list[dict], notes: dict) -> list[dict]:
+    """Parameter sensitivity, within-run segment spread, and same-session idle spread of e_iter."""
+    own = [r for r in rows if r["tail_mean_power_W"] is not None]
+    spreads = [statistics.stdev([r["tail_mean_power_W"] for r in own if (started(r).strftime("%H:%M") < BASELINE_STEP) == early])
+               for early in (True, False)]
+    idle_u = max(spreads)
+    by_label = {LABELS[n]: n for n in ORDER}
+    out = []
+    for r in rows:
+        name = by_label[r["parameter"]]
+        root, pairs, _ = decode(DATA / f"{name}.dlog")
+        dt = float(root.findtext("frame/tint"))
+        power = [v * i for v, i in pairs]
+        coverage = len(power) * dt
+        nominal = r["incremental_energy_per_iteration_mJ"]
+        variants = []
+        for fraction in SENS_STEP_FRACTIONS:
+            for hold in SENS_HOLD_S:
+                edge = find_completion(power, dt, notes[name][1], fraction, hold)
+                window = coverage if edge is None else edge
+                energy = math.fsum(power[:int(window / dt)]) * dt
+                for settle in SENS_SETTLE_S:
+                    idle = r["idle_power_W"]
+                    if edge is not None and coverage - edge - settle >= MIN_TAIL_S:
+                        first = int((edge + settle) / dt)
+                        idle = math.fsum(power[first:]) / (len(power) - first)
+                    variants.append(1000 * (energy - idle * window) / r["ntest_reported"])
+        increment = r["power_mean_W"] - r["idle_power_W"]
+        length = (r["integrated_duration_s"] - 2.0) / SEGMENTS
+        bounds = [int((1.0 + j * length) / dt) for j in range(SEGMENTS + 1)]
+        segments = [math.fsum(power[a:b]) / (b - a) for a, b in zip(bounds, bounds[1:])]
+        segment_rel = statistics.stdev(segments) / math.sqrt(SEGMENTS) / increment
+        idle_rel = idle_u / increment
+        out.append({
+            "parameter": r["parameter"],
+            "sensitivity_max_rel": max(abs(v - nominal) for v in variants) / nominal,
+            "segment_se_rel": segment_rel, "idle_spread_W": idle_u, "idle_rel": idle_rel,
+            "combined_standard_rel": math.hypot(segment_rel, idle_rel),
+        })
+    return out
+
+
 def write_csv(path: Path, rows: list[dict]) -> None:
     fields = ["parameter", "ntest_reported", "completion_captured", "integrated_duration_s", "power_mean_W",
               "idle_power_W", "idle_source", "current_max_A", "estimated_window_energy_J",
@@ -223,6 +271,8 @@ def main() -> None:
     parser.add_argument("--check-table", type=Path, metavar="TEX",
                         help="Check that a LaTeX table contains the twelve rounded rows")
     parser.add_argument("--tails", action="store_true", help="Compare annotated completion with the trace edge and tail power")
+    parser.add_argument("--uncertainty", action="store_true",
+                        help="Print parameter sensitivity and the standard uncertainty of each e_iter (slow)")
     args = parser.parse_args()
     notes = read_notes()
     if {p.stem for p in DATA.glob("*.dlog")} != set(ORDER):
@@ -241,6 +291,8 @@ def main() -> None:
                    "Current maxima are maxima of stored interval means, not transient peaks."],
         "captures": rows,
     }
+    if args.uncertainty or args.output:
+        report["uncertainty"] = uncertainty(rows, notes)
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
@@ -254,6 +306,11 @@ def main() -> None:
             tail = "-" if r["tail_mean_power_W"] is None else f"{r['tail_mean_power_W']:.3f} W over {r['tail_used_s']:.2f} s"
             print(f"{r['parameter']}: note {r['note_active_duration_s']:.0f} s, trace edge {edge} s, tail {tail}, "
                   f"idle {r['idle_power_W']:.3f} W from {r['idle_source']}")
+    if args.uncertainty:
+        for u in report["uncertainty"]:
+            print(f"{u['parameter']}: parameter sensitivity {100 * u['sensitivity_max_rel']:.1f}%, "
+                  f"segment SE {100 * u['segment_se_rel']:.1f}%, idle {100 * u['idle_rel']:.1f}%, "
+                  f"combined {100 * u['combined_standard_rel']:.1f}%")
     if args.check_table:
         table = args.check_table.read_text(encoding="utf-8")
         for row in rendered.splitlines():
