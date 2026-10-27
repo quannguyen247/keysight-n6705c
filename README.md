@@ -108,7 +108,16 @@ python3 models/gateway_check.py
 | Device restarts its counter without re-keying | 39,681 | 3 actions | none | none |
 | Gateway loses its counter table | 232,119 | none | none | 4 actions |
 
-The model has two counters per device and two payload values, so it is a bounded check of the local layer, not a proof of the full protocol.
+The design result does not change when the bounds grow (`--honest`, `--counters`):
+
+| Honest devices | Highest counter | Reachable states | Result for the design |
+|---:|---:|---:|---|
+| 2 | 2 | 3,969 | P0, P1, P2 hold |
+| 2 | 3 | 195,075 | P0, P1, P2 hold |
+| 3 | 2 | 83,349 | P0, P1, P2 hold |
+| 3 | 3 | 16,581,375 | P0, P1, P2 hold (about 7 minutes) |
+
+It is still a bounded check of the local layer with two payload values, not a proof of the full protocol.
 
 `models/uplink_check.py` covers the cloud-facing exchange: D sends an ephemeral ML-KEM public key signed with its long-term key, C encapsulates to it and signs the ciphertext together with that key. The adversary can replace either message with anything it can build, and the long-term keys of D and C leak after the session.
 

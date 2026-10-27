@@ -29,6 +29,15 @@ PAYLOADS = ("a", "b")
 MAX_COUNTER = 2
 
 
+def configure(honest: int, counters: int) -> None:
+    """Set the model bounds: number of honest devices and highest counter value."""
+    global HONEST, COMPROMISED, DEVICES, MAX_COUNTER
+    HONEST = tuple(range(1, honest + 1))
+    COMPROMISED = honest + 1
+    DEVICES = HONEST + (COMPROMISED,)
+    MAX_COUNTER = counters
+
+
 @dataclass(frozen=True)
 class Variant:
     name: str
@@ -97,7 +106,7 @@ def violations(state: tuple) -> set[str]:
 
 
 def search(variant: Variant, depth: int | None) -> tuple[dict[str, list[str]], int]:
-    start = ((0, 0), frozenset(), (0,) * len(DEVICES), (), False, False)
+    start = ((0,) * len(HONEST), frozenset(), (0,) * len(DEVICES), (), False, False)
     parents = {start: None}
     queue = deque([(start, 0)])
     first: dict[str, list[str]] = {}
@@ -121,8 +130,13 @@ def search(variant: Variant, depth: int | None) -> tuple[dict[str, list[str]], i
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--depth", type=int, help="stop after this many actions (default: explore every reachable state)")
+    parser.add_argument("--honest", type=int, default=len(HONEST), help="number of honest devices")
+    parser.add_argument("--counters", type=int, default=MAX_COUNTER, help="highest counter value per device")
+    parser.add_argument("--variant", choices=[v.name for v in VARIANTS], help="check one variant only")
     args = parser.parse_args()
-    for variant in VARIANTS:
+    configure(args.honest, args.counters)
+    print(f"{args.honest} honest devices, 1 compromised device, counters up to {args.counters}")
+    for variant in (v for v in VARIANTS if args.variant in (None, v.name)):
         found, states = search(variant, args.depth)
         scope = "all reachable states" if args.depth is None else f"up to depth {args.depth}"
         print(f"{variant.name}: {states} states ({scope})")
