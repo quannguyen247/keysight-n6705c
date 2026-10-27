@@ -1,0 +1,66 @@
+{
+  "reference_reader": "https://github.com/derf/dlog-viewer",
+  "check": "Each capture decoded with the reference reader and with scripts/analyse_energy_logs.py; pair counts and every voltage/current value compared.",
+  "captures": [
+    {
+      "file": "data/kyber512.dlog",
+      "sample_pairs_match": true,
+      "all_paired_values_identical": true
+    },
+    {
+      "file": "data/kyber768.dlog",
+      "sample_pairs_match": true,
+      "all_paired_values_identical": true
+    },
+    {
+      "file": "data/kyber1024.dlog",
+      "sample_pairs_match": true,
+      "all_paired_values_identical": true
+    },
+    {
+      "file": "data/dilithium2.dlog",
+      "sample_pairs_match": true,
+      "all_paired_values_identical": true
+    },
+    {
+      "file": "data/dilithium3.dlog",
+      "sample_pairs_match": true,
+      "all_paired_values_identical": true
+    },
+    {
+      "file": "data/dilithium5.dlog",
+      "sample_pairs_match": true,
+      "all_paired_values_identical": true
+    },
+    {
+      "file": "data/sha2-128s.dlog",
+      "sample_pairs_match": true,
+      "all_paired_values_identical": true
+    },
+    {
+      "file": "data/sha2-192s.dlog",
+      "sample_pairs_match": true,
+      "all_paired_values_identical": true
+    },
+    {
+      "file": "data/sha2-256s.dlog",
+      "sample_pairs_match": true,
+      "all_paired_values_identical": true
+    },
+    {
+      "file": "data/shake-128s.dlog",
+      "sample_pairs_match": true,
+      "all_paired_values_identical": true
+    },
+    {
+      "file": "data/shake-192s.dlog",
+      "sample_pairs_match": true,
+      "all_paired_values_identical": true
+    },
+    {
+      "file": "data/shake-256s.dlog",
+      "sample_pairs_match": true,
+      "all_paired_values_identical": true
+    }
+  ]
+}
