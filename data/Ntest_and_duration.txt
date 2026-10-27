@@ -1,0 +1,19 @@
++ dilithium2   ntest = 3000 durations: 29/30s
++ dilithium3   ntest = 1500 durations: 25/30s
++ dilithium5   ntest = 1200 durations: 28/30s
+
++ kyber512  ntest = 15000 durations: 30/30s
++ kyber768  ntest = 8000 durations: 27/30s
++ kyber1024  ntest = 5000 durations: 28/30s
+
++ sphincsplus sha2-128s ntest = 3 38/45s
++ sphincsplus sha2-192s ntest = 3 80/90s
++ sphincsplus sha2-256s ntest = 3 76/80s
++ sphincsplus shake-128s ntest = 3 83/85s
++ sphincsplus shake-192s ntest = 3 143/145s
++ sphincsplus shake-256s ntest = 3 120/121s
+
+duration trước dấu "/" là thời gian từ lúc bắt đầu chạy đến khi xong test
+còn sau "/" là khoảng thời gian đặt cho datalogger để thu 
+nên cắt ở thời gian trước "/" để tránh dư thừa làm sai kết quả
+ví dụ + sphincsplus shake-192s ntest = 3 143/145s bỏ đi 2 giây cuối(145-143) vì tại thời điểm 143s đã hoàn thành
